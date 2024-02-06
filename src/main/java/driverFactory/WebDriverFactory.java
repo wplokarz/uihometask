@@ -2,6 +2,7 @@ package driverFactory;
 
 import interfaces.BrowserData;
 import org.aeonbits.owner.ConfigFactory;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -35,8 +36,9 @@ public class WebDriverFactory {
     }
 
     private static WebDriver createFirefoxDriver() {
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.addArguments("--windows-size=%x,%x", browserData.width(), browserData.height());
-        return new FirefoxDriver(firefoxOptions);
+        FirefoxDriver firefoxDriver = new FirefoxDriver();
+        Dimension dimension = new Dimension(Integer.parseInt(browserData.width()), Integer.parseInt(browserData.height()));
+        firefoxDriver.manage().window().setSize(dimension);
+        return firefoxDriver;
     }
 }
