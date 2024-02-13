@@ -1,4 +1,8 @@
+import driverFactory.BrowserFactory;
+import driverFactory.ChromeFactory;
 import driverFactory.WebDriverFactory;
+import interfaces.BrowserData;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +17,9 @@ public class ProductTest {
 
     @Before
     public void setup() {
-        driver = WebDriverFactory.getWebdriver();
+        BrowserData browserData = ConfigFactory.create(BrowserData.class);
+        BrowserFactory chromeFactory = new ChromeFactory(browserData);
+        driver = WebDriverFactory.getWebdriver(chromeFactory);
     }
 
     @Test

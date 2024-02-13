@@ -7,33 +7,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class WebDriverFactory {
     private static WebDriver driver;
     static BrowserData browserData = ConfigFactory.create(BrowserData.class);
 
-    static void initialize() {
-        switch (browserData.browser().toLowerCase()) {
-            case "chrome":
-                driver = createChromeDriver();
-                break;
-            case "firefox":
-                driver = createFirefoxDriver();
-                break;
-        }
+    static void initialize(BrowserFactory factory) {
+        driver = factory.createDriver();
     }
 
-    public static WebDriver getWebdriver() {
-        initialize();
+    public static WebDriver getWebdriver(BrowserFactory factory) {
+        if (driver == null) {
+            initialize(factory);
+        }
         return driver;
     }
 
-    private static WebDriver createChromeDriver() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--window-size=" + browserData.width() + "," + browserData.height());
-        return new ChromeDriver(chromeOptions);
-    }
 
     private static WebDriver createFirefoxDriver() {
         FirefoxDriver firefoxDriver = new FirefoxDriver();
