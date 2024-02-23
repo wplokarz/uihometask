@@ -37,6 +37,7 @@ public class ProductTest {
         Assert.assertEquals(resultPage.getProductPrice(), "$19.99");
     }
 
+
     @After
     public void tearDown() {
         if (driver != null) {
